@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public bool canMove { get; set; } = true;
     private Matrix4x4 isoMatrix;
     private float horizontal;
     private float vertical;
@@ -21,7 +22,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
+        if (canMove)
+            Move();
     }
 
     private void HandleInput()

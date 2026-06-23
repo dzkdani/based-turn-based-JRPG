@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
         _offset = transform.position - target.position;
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (target == null) return;
 
@@ -32,5 +32,13 @@ public class CameraFollow : MonoBehaviour
             ref _currentVelocity, 
             smoothTime
         );
+    }
+
+    void LateUpdate()
+    {
+        if (target != null)
+        {
+            transform.position = target.position + _offset; 
+        }
     }
 }

@@ -8,12 +8,16 @@ public class Interaction : MonoBehaviour
     [SerializeField] private Flowchart flowchart;      
     [SerializeField] private string blockName;   
     
+    [Header("UI")]
+    [SerializeField] private Transform promptAnchor;
+    public Transform PromptAnchor => promptAnchor;
+    
     public static event Action OnInteractionStart;
     public static event Action OnInteractionEnd;
 
     private bool _isInteracting = false;
 
-    public void StartInteraction()
+    public virtual void StartInteraction()
     {
         if (_isInteracting) 
             return;
@@ -22,12 +26,17 @@ public class Interaction : MonoBehaviour
         OnInteractionStart?.Invoke();
 
         if (flowchart != null && !string.IsNullOrEmpty(blockName))
-            flowchart.ExecuteBlock(blockName);
+        {
+            DialogueManager.Instance.StartDialogue(
+                flowchart,
+                blockName,
+                this);
+        }
         else
             EndInteraction();
     }
 
-    public void EndInteraction()
+    public virtual void EndInteraction()
     {
         _isInteracting = false;
         OnInteractionEnd?.Invoke();

@@ -11,7 +11,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 _isoDirection;
     private Rigidbody _rigidbody;
 
-    private Interaction _currentInteraction; 
+    private Interaction _currentInteraction;
+
+    private Vector3? _cutsceneTarget = null;
+    private float _cutsceneSpeed;
+
 
     private void OnEnable()
     {
@@ -41,6 +45,10 @@ public class PlayerController : MonoBehaviour
     {
         if (CanMove)
             Move();
+        else if (_cutsceneTarget.HasValue)
+        {
+            // ExecuteCutsceneMove();
+        }
     }
 
     private void Input()
@@ -63,15 +71,11 @@ public class PlayerController : MonoBehaviour
     {
         if (CanMove && _currentInteraction != null && UnityEngine.Input.GetKeyDown(KeyCode.Space))
         {
-            _currentInteraction.StartInteraction();
-
-            // Calculate direction to the NPC (ignoring height differences)
             Vector3 lookDirection = _currentInteraction.transform.position - transform.position;
             lookDirection.y = 0; 
 
             if (lookDirection != Vector3.zero)
             {
-                // Instantly snap or smoothly rotate the player to face the NPC
                 transform.rotation = Quaternion.LookRotation(lookDirection);
             }
 
@@ -97,6 +101,7 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<Interaction>(out Interaction interaction))
         {
             _currentInteraction = interaction;
+            UIManager.Instance.ShowInteraction(interaction);
         }
     }
 
@@ -107,10 +112,25 @@ public class PlayerController : MonoBehaviour
             if (_currentInteraction == interaction)
             {
                 _currentInteraction = null;
+                UIManager.Instance.HideInteraction();
             }
         }
     }
 
-    private void DisableMovement() => CanMove = false;
-    private void EnableMovement() => CanMove = true;
+    public void ForceDisableMovement() => DisableMovement();
+    public void ForceEnableMovement() => EnableMovement();
+
+    private void DisableMovement()
+    {
+        Debug.Log("DisableMovement");
+        CanMove = false;
+        UIManager.Instance.HideInteraction();
+    }
+    private void EnableMovement()
+    {
+        Debug.Log("EnableMovement");
+        CanMove = true;
+        if (_currentInteraction != null)
+            UIManager.Instance.ShowInteraction(_currentInteraction);
+    }
 }

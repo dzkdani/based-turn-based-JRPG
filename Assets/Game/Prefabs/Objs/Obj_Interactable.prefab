@@ -1,0 +1,257 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7527112732590839145
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3798116300457812219, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4805706015448796447, guid: 473537a582752b44380860c089ba7bc0, type: 3}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: blockName
+      value: Totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: nodeRect.x
+      value: 185.40001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: nodeRect.y
+      value: 37.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: commandList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3541656567475187700}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5332553294777051842}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8308526054314764287}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 5226023746033464128}
+    - target: {fileID: 6616410882231649132, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: m_Name
+      value: Obj_Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811945513198195097, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: blockName
+      value: Totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811945513198195097, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: promptAnchor
+      value: 
+      objectReference: {fileID: 4505478294199363048}
+    - target: {fileID: 7215995462315704230, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: nameText
+      value: Totem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: selectedBlocks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969105267378928679, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    m_RemovedComponents:
+    - {fileID: 6059312351585136936, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 2733609035510795051, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5770105133935125527, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 1169976175333254174, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 4248866111625373346, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 7300667221731847880, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6113183028368104093, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 2927230086593915892, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3541656567475187700}
+    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5332553294777051842}
+    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8308526054314764287}
+    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5226023746033464128}
+  m_SourcePrefab: {fileID: 100100000, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+--- !u!114 &887755044757039823 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7215995462315704230, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+  m_PrefabInstance: {fileID: 7527112732590839145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3722114599711397381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.Character
+--- !u!1 &3691135847004898457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+  m_PrefabInstance: {fileID: 7527112732590839145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3541656567475187700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691135847004898457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.Say
+  itemId: 2
+  indentLevel: 0
+  storyText: Never gonna give up, Never gonna let you down!
+  description: 
+  character: {fileID: 887755044757039823}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &5332553294777051842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691135847004898457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.Say
+  itemId: 6
+  indentLevel: 0
+  storyText: what the hell?!?
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &8308526054314764287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691135847004898457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.InvokeMethod
+  itemId: 7
+  indentLevel: 0
+  description: end of interaction
+  targetObject: {fileID: 3722114599711397381}
+  targetComponentAssemblyName: Interaction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  targetComponentFullname: 'UnityEngine.Component[]'
+  targetComponentText: Interaction
+  targetMethod: EndInteraction
+  targetMethodText: 'EndInteraction (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &5226023746033464128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691135847004898457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f1ca510a57aa47568a5e4ee558ff41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.Stop
+  itemId: 8
+  indentLevel: 0
+--- !u!1 &3722114599711397381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6616410882231649132, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+  m_PrefabInstance: {fileID: 7527112732590839145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4505478294199363048 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6265353178797699201, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+  m_PrefabInstance: {fileID: 7527112732590839145}
+  m_PrefabAsset: {fileID: 0}

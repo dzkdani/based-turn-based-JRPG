@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             Move();
         else if (_cutsceneTarget.HasValue)
         {
-            // ExecuteCutsceneMove();
+            // DoCutscene
         }
     }
 

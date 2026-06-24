@@ -1,10 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BattleInitializer : MonoBehaviour
 {
+    [SerializeField]
+    private BattleManager battleManager;
+    
     [Header("Spawn Anchors")]
     [SerializeField] private Transform playerSpawnAnchor;
     [SerializeField] private Transform[] enemySpawnAnchors;
+
+    private readonly List<BattleUnit> spawnedPlayers = new();
+    private readonly List<BattleUnit> spawnedEnemies = new();
 
     void Start()
     {
@@ -19,32 +26,39 @@ public class BattleInitializer : MonoBehaviour
 
     private void SpawnCombatants()
     {
-        // 1. Spawn Player
         GameObject playerInstance = Instantiate(
             GameManager.Instance.playerBattlePrefab, 
             playerSpawnAnchor.position, 
             playerSpawnAnchor.rotation
         );
 
-        // Assign the player instance to your Battle Camera (explained below)
-        SetupBattleCamera(playerInstance.transform);
-        GameManager.Instance.PlayerController.ForceDisableMovement();
-
-        // 2. Spawn Enemies dynamically based on what was passed
-        EnemyEncounterData data = GameManager.Instance.currentEncounter;
+        BattleUnit playerUnit =
+            playerInstance.GetComponent<BattleUnit>();
+        spawnedPlayers.Add(playerUnit);
         
+        GameManager.Instance.PlayerController.ForceDisableMovement();
+        SetupBattleCamera(playerInstance.transform);
+
+        EnemyEncounterData data = GameManager.Instance.currentEncounter;
         for (int i = 0; i < data.enemyPrefabs.Length; i++)
         {
-            if (i >= enemySpawnAnchors.Length) break; // Safety check
+            if (i >= enemySpawnAnchors.Length) break; 
 
-            Instantiate(
+            GameObject enemyInstance = Instantiate(
                 data.enemyPrefabs[i], 
                 enemySpawnAnchors[i].position, 
                 enemySpawnAnchors[i].rotation
             );
+
+            BattleUnit enemyUnit =
+                enemyInstance.GetComponent<BattleUnit>();
+            spawnedEnemies.Add(enemyUnit);
         }
         
-        // 3. Kick off your Turn-Based Logic / Fungus sequence here!
+        //Kick off your Turn-Based Logic / Fungus sequence here!
+        battleManager.InitializeBattle(
+            spawnedPlayers,
+            spawnedEnemies);
     }
 
     private void SetupBattleCamera(Transform playerTransform)

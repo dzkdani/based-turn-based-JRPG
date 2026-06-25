@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 6468909374794171289}
   - component: {fileID: 7798934607012375672}
   - component: {fileID: 3828571354091806122}
+  - component: {fileID: 7885719050986084386}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -208,3 +209,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
+--- !u!114 &7885719050986084386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570195198146471582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb11981267d95d4090d41a51ab8f409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleUnit
+  UnitSO: {fileID: 11400000, guid: ac09bf1617fda0f40bb043c3db2aa359, type: 2}
+  Team: 0
+  IsDead: 0

@@ -21,12 +21,18 @@ public class PlayerController : MonoBehaviour
     {
         Interaction.OnInteractionStart += DisableMovement;
         Interaction.OnInteractionEnd += EnableMovement;
+
+        WorldEvents.OnWorldFreeze += DisableMovement;
+        WorldEvents.OnWorldUnfreeze += EnableMovement;
     }
 
     private void OnDisable()
     {
         Interaction.OnInteractionStart -= DisableMovement;
         Interaction.OnInteractionEnd -= EnableMovement;
+
+        WorldEvents.OnWorldFreeze -= DisableMovement;
+        WorldEvents.OnWorldUnfreeze -= EnableMovement;
     }
 
     private void Start()

@@ -4,25 +4,28 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Current Battle Data")]
-    public EnemyEncounterData currentEncounter;
-    public GameObject playerBattlePrefab;
+    [Header("Encounter")]
+    public EnemyEncounterData CurrentEncounter;
 
-    private PlayerController _playerController;
-    public PlayerController PlayerController => _playerController; 
+    [Header("Battle Setup")]
+    public GameObject PlayerBattlePrefab;
+    public BattleUnit CurrentBattlePlayer { get; set; }
 
-    void Awake()
+
+    private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); 
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
-        _playerController = playerBattlePrefab.GetComponent<PlayerController>();
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void SetEncounter(EnemyEncounterData encounter)
+    {
+        CurrentEncounter = encounter;
     }
 }

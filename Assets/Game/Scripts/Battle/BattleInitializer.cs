@@ -5,68 +5,112 @@ public class BattleInitializer : MonoBehaviour
 {
     [SerializeField]
     private BattleManager battleManager;
-    
+
+    [SerializeField]
+    private BattleCameraFollow battleCamera;
+
     [Header("Spawn Anchors")]
-    [SerializeField] private Transform playerSpawnAnchor;
-    [SerializeField] private Transform[] enemySpawnAnchors;
+    [SerializeField]
+    private Transform playerSpawnAnchor;
+
+    [SerializeField]
+    private Transform[] enemySpawnAnchors;
 
     private readonly List<BattleUnit> spawnedPlayers = new();
     private readonly List<BattleUnit> spawnedEnemies = new();
 
-    void Start()
+    private void Start()
     {
-        if (GameManager.Instance == null || GameManager.Instance.currentEncounter == null)
+        ValidateSetup();
+
+        SpawnCombatants();
+
+        battleManager.InitializeBattle(spawnedPlayers, spawnedEnemies);
+    }
+
+    private void ValidateSetup()
+    {
+        if(GameManager.Instance == null)
         {
-            Debug.LogError("No battle data found to initialize!");
+            Debug.LogError("GameManager not found!");
+
+            enabled = false;
             return;
         }
 
-        SpawnCombatants();
+        if(GameManager.Instance.CurrentEncounter == null)
+        {
+            Debug.LogError("Current Encounter not assigned!");
+
+            enabled = false;
+            return;
+        }
     }
 
     private void SpawnCombatants()
     {
-        GameObject playerInstance = Instantiate(
-            GameManager.Instance.playerBattlePrefab, 
-            playerSpawnAnchor.position, 
-            playerSpawnAnchor.rotation
-        );
+        SpawnPlayer();
+        SpawnEnemies();
+    }
 
-        BattleUnit playerUnit =
-            playerInstance.GetComponent<BattleUnit>();
-        spawnedPlayers.Add(playerUnit);
-        
-        GameManager.Instance.PlayerController.ForceDisableMovement();
-        SetupBattleCamera(playerInstance.transform);
+    private void SpawnPlayer()
+    {
+        GameObject playerInstance =
+            Instantiate(
+                GameManager.Instance.PlayerBattlePrefab,
+                playerSpawnAnchor.position,
+                playerSpawnAnchor.rotation);
 
-        EnemyEncounterData data = GameManager.Instance.currentEncounter;
-        for (int i = 0; i < data.enemyPrefabs.Length; i++)
+        if(!playerInstance.TryGetComponent(out BattleUnit playerUnit))
         {
-            if (i >= enemySpawnAnchors.Length) break; 
+            Debug.LogError("Player prefab missing BattleUnit!");
+            return;
+        }
 
-            GameObject enemyInstance = Instantiate(
-                data.enemyPrefabs[i], 
-                enemySpawnAnchors[i].position, 
-                enemySpawnAnchors[i].rotation
-            );
+        spawnedPlayers.Add(playerUnit);
 
-            BattleUnit enemyUnit =
-                enemyInstance.GetComponent<BattleUnit>();
+        GameManager.Instance.CurrentBattlePlayer = playerUnit;
+
+        SetupBattleCamera(playerInstance.transform);
+    }
+
+    private void SpawnEnemies()
+    {
+        EnemyEncounterData encounter = GameManager.Instance.CurrentEncounter;
+
+        if(encounter.enemyPrefabs.Length >
+           enemySpawnAnchors.Length)
+        {
+            Debug.LogWarning(
+                "More enemies than spawn anchors.");
+        }
+
+        for(int i = 0; i < encounter.enemyPrefabs.Length; i++)
+        {
+            if(i >= enemySpawnAnchors.Length)
+                break;
+
+            GameObject enemyInstance =
+                Instantiate(
+                    encounter.enemyPrefabs[i],
+                    enemySpawnAnchors[i].position,
+                    enemySpawnAnchors[i].rotation);
+
+            if(!enemyInstance.TryGetComponent(out BattleUnit enemyUnit))
+            {
+                Debug.LogError($"{enemyInstance.name} missing BattleUnit");
+                continue;
+            }
+
             spawnedEnemies.Add(enemyUnit);
         }
-        
-        //Kick off your Turn-Based Logic / Fungus sequence here!
-        battleManager.InitializeBattle(
-            spawnedPlayers,
-            spawnedEnemies);
     }
 
     private void SetupBattleCamera(Transform playerTransform)
     {
-        BattleCameraFollow battleCam = Camera.main.GetComponent<BattleCameraFollow>();
-        if (battleCam != null)
-        {
-            battleCam.target = playerTransform;
-        }
+        if(battleCamera == null)
+            return;
+
+        battleCamera.target = playerTransform;
     }
 }

@@ -21,7 +21,7 @@ public class BattleInteraction : Interaction
         // 1. Clear the encounter data from GameManager
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.currentEncounter = null;
+            GameManager.Instance.CurrentEncounter = null;
         }
 
         // 2. Run the base logic (Fires OnInteractionEnd event)
@@ -37,6 +37,6 @@ public class BattleInteraction : Interaction
         }
 
         // 1. Set the current encounter data in GameManager
-        GameManager.Instance.currentEncounter = encounterData;
+        GameManager.Instance.SetEncounter(encounterData);
     }
 }

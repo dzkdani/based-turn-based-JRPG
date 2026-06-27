@@ -35,18 +35,23 @@ public class BattleInitializer : MonoBehaviour
 
     private void ValidateSetup()
     {
-        if(GameManager.Instance == null)
+        if (GameManager.Instance == null)
         {
-            Debug.LogError("GameManager not found!");
-
+            Debug.LogError("GameManager is missing in the scene!");
             enabled = false;
             return;
         }
 
-        if(GameManager.Instance.CurrentEncounter == null)
+        if (GameManager.Instance.CurrentEncounter == null)
         {
             Debug.LogError("Current Encounter not assigned!");
+            enabled = false;
+            return;
+        }
 
+        if (GameManager.Instance.PlayerBattlePrefab == null)
+        {
+            Debug.LogError("PlayerBattlePrefab not configured in GameManager!");
             enabled = false;
             return;
         }

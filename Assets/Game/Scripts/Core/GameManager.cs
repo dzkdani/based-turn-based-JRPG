@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Encounter")]
-    public EnemyEncounterData CurrentEncounter;
+    public EnemyEncounterData CurrentEncounter { get; private set; }
 
     [Header("Battle Setup")]
     public GameObject PlayerBattlePrefab;

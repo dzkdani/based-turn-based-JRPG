@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<Interaction>(out Interaction interaction))
         {
             _currentInteraction = interaction;
-            UIManager.Instance.ShowInteraction(interaction);
+            WorldUIManager.Instance.ShowInteraction(interaction);
         }
     }
 
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
             if (_currentInteraction == interaction)
             {
                 _currentInteraction = null;
-                UIManager.Instance.HideInteraction();
+                WorldUIManager.Instance.HideInteraction();
             }
         }
     }
@@ -127,13 +127,13 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("DisableMovement");
         CanMove = false;
-        UIManager.Instance.HideInteraction();
+        WorldUIManager.Instance.HideInteraction();
     }
     private void EnableMovement()
     {
         Debug.Log("EnableMovement");
         CanMove = true;
         if (_currentInteraction != null)
-            UIManager.Instance.ShowInteraction(_currentInteraction);
+            WorldUIManager.Instance.ShowInteraction(_currentInteraction);
     }
 }

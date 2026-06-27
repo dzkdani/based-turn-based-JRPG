@@ -7,24 +7,12 @@ public class BattleInteraction : Interaction
 
     public override void StartInteraction()
     {
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("GameManager Instance is missing in the scene!");
-            return;
-        }
-
         base.StartInteraction();
     }
 
     public override void EndInteraction()
     {
-        // 1. Clear the encounter data from GameManager
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.CurrentEncounter = null;
-        }
-
-        // 2. Run the base logic (Fires OnInteractionEnd event)
+        // Do not clear encounter state here; battle flow should manage encounter lifecycle.
         base.EndInteraction();
     }
 
@@ -32,11 +20,10 @@ public class BattleInteraction : Interaction
     {
         if (GameManager.Instance == null)
         {
-            Debug.LogError("GameManager Instance is missing in the scene!");
+            Debug.LogError("GameManager is missing in the scene!", this);
             return;
         }
 
-        // 1. Set the current encounter data in GameManager
         GameManager.Instance.SetEncounter(encounterData);
     }
 }

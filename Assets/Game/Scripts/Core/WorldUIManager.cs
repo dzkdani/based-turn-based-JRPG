@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class WorldUIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
+    public static WorldUIManager Instance { get; private set; }
 
     [SerializeField]
     private InteractionPromptUI interactionPrompt;

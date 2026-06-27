@@ -79,11 +79,11 @@ PrefabInstance:
     - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: 'commandList.Array.data[2]'
       value: 
-      objectReference: {fileID: 8308526054314764287}
+      objectReference: {fileID: 0}
     - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: 'commandList.Array.data[3]'
       value: 
-      objectReference: {fileID: 5226023746033464128}
+      objectReference: {fileID: 0}
     - target: {fileID: 6616410882231649132, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: m_Name
       value: Obj_Interactable
@@ -101,8 +101,24 @@ PrefabInstance:
       value: Totem
       objectReference: {fileID: 0}
     - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: variables.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'variables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: selectedBlocks.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: selectedCommands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'selectedCommands.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8969105267378928679, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -117,6 +133,15 @@ PrefabInstance:
     - {fileID: 7300667221731847880, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
     - {fileID: 6113183028368104093, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
     - {fileID: 2927230086593915892, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5253765025833952198, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5104185099903329677, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6283018712871855075, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 7660439705983906202, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 3728682469816588700, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5088461014799237369, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6013700442854386095, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5231744758191477989, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6593745764709484482, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -126,19 +151,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5332553294777051842}
-    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8308526054314764287}
-    - targetCorrespondingSourceObject: {fileID: 6578669823697719792, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5226023746033464128}
   m_SourcePrefab: {fileID: 100100000, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
 --- !u!114 &887755044757039823 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7215995462315704230, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
   m_PrefabInstance: {fileID: 7527112732590839145}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3722114599711397381}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
@@ -203,53 +222,6 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
---- !u!114 &8308526054314764287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3691135847004898457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.InvokeMethod
-  itemId: 7
-  indentLevel: 0
-  description: end of interaction
-  targetObject: {fileID: 3722114599711397381}
-  targetComponentAssemblyName: Interaction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-    PublicKeyToken=null
-  targetComponentFullname: 'UnityEngine.Component[]'
-  targetComponentText: Interaction
-  targetMethod: EndInteraction
-  targetMethodText: 'EndInteraction (): Void'
-  methodParameters: []
-  saveReturnValue: 0
-  returnValueVariableKey: 
-  returnValueType: System.Void
-  showInherited: 0
-  callMode: 0
---- !u!114 &5226023746033464128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3691135847004898457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1ca510a57aa47568a5e4ee558ff41f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Stop
-  itemId: 8
-  indentLevel: 0
---- !u!1 &3722114599711397381 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6616410882231649132, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
-  m_PrefabInstance: {fileID: 7527112732590839145}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4505478294199363048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6265353178797699201, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}

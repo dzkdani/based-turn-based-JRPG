@@ -1,11 +1,12 @@
 using UnityEngine;
 using Fungus;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IDialogueService, IInteractionService
 {
     public static DialogueManager Instance { get; private set; }
 
     public bool IsDialogueRunning { get; private set; }
+    public bool IsInteractionRunning => IsDialogueRunning;
 
     private Interaction _currentInteraction;
 
@@ -20,16 +21,24 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
     }
 
-    public void StartDialogue(Flowchart flowchart, string blockName, Interaction interaction)
+    public bool StartInteraction(Interaction interaction, Flowchart flowchart, string blockName)
+    {
+        return StartDialogue(flowchart, blockName, interaction);
+    }
+
+    public bool StartDialogue(Flowchart flowchart, string blockName, Interaction interaction)
     {
         Debug.Log("StartDialogue");
         if (IsDialogueRunning)
-            return;
+            return false;
+
+        if (flowchart == null || string.IsNullOrEmpty(blockName) || interaction == null)
+            return false;
 
         IsDialogueRunning = true;
         _currentInteraction = interaction;
         flowchart.ExecuteBlock(blockName);
-
+        return true;
     }
 
     public void EndDialogue()

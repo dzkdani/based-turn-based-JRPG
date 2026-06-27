@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1169976175333254174, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: indentLevel
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1612948430652109205, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.51
@@ -48,11 +52,77 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2927230086593915892, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: indentLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4248866111625373346, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: indentLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5088461014799237369, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[5]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[6]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289041845576076434, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'commandList.Array.data[7]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6616410882231649132, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
       propertyPath: m_Name
       value: NPC_Interactable
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: variables.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'variables.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279583686343840138, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+      propertyPath: 'selectedCommands.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6059312351585136936, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 2733609035510795051, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5770105133935125527, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 1169976175333254174, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 4248866111625373346, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 7300667221731847880, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6113183028368104093, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 2927230086593915892, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 5231744758191477989, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
+    - {fileID: 6013700442854386095, guid: c5fa0cc34d8295048bc21670bfe106f5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

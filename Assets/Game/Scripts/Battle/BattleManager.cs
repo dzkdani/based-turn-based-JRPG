@@ -1,16 +1,20 @@
-    using UnityEngine;
-    using System.Collections.Generic;
-    using System.Collections;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
-    public class BattleManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
     {
         public TurnManager TurnManager { get; private set; }
         public BattleState CurrentState;
-        public ActionSystem ActionSystem;
+        private TargetSystem targetSystem;
 
         public List<BattleUnit> PlayerUnits;
         public List<BattleUnit> EnemyUnits;
         public BattleUnit CurrentUnit;
+
+        private BattleActionSO currentAction;
+        private BattleUnit currentTarget;
 
         private void OnEnable()
         {
@@ -25,12 +29,10 @@
         private void Awake()
         {
             TurnManager = new TurnManager();
-            ActionSystem = new ActionSystem();
+            targetSystem = new TargetSystem();
         }
 
-        public void InitializeBattle(
-            List<BattleUnit> players,
-            List<BattleUnit> enemies)
+        public void InitializeBattle(List<BattleUnit> players, List<BattleUnit> enemies)
         {
             PlayerUnits = players;
             EnemyUnits = enemies;
@@ -63,13 +65,13 @@
 
             if(CurrentUnit.Team == Team.Player)
             {
-                CurrentState = BattleState.WaitingForInput;
+                CurrentState = BattleState.WaitingForCommand;
                 
                 BattleEvents.OnPlayerTurn?.Invoke();
             }
             else
             {   
-                CurrentState = BattleState.ExecutingAction;
+                CurrentState = BattleState.Executing;
 
                 BattleEvents.OnEnemyTurn?.Invoke();
 
@@ -153,7 +155,7 @@
 
         private void OnAttackPressed()
         {
-            if(CurrentState != BattleState.WaitingForInput)
+            if(CurrentState != BattleState.WaitingForCommand)
                 return;
 
             if(CurrentUnit.Team != Team.Player)
@@ -174,18 +176,21 @@
 
         private IEnumerator PlayerAttack()
         {
-            CurrentState = BattleState.ExecutingAction;
+            CurrentState = BattleState.Executing;
 
             AttackAction attack = new AttackAction();
 
-            BattleUnit attacker =
-                CurrentUnit;
+            BattleActionSO attackAction = CurrentUnit.Data.Skills.FirstOrDefault(a => a.ActionType == BattleActionType.Attack);
 
-            List<BattleUnit> targets = new List<BattleUnit>();
-            targets.Add(EnemyUnits[0]);
+            List<BattleUnit> targets =
+                targetSystem.GetTargets(
+                    CurrentUnit,
+                    attackAction.TargetType,
+                    PlayerUnits,
+                    EnemyUnits);
 
-            yield return StartCoroutine(attack.Execute(CurrentUnit, targets));
-            // yield return new WaitForSeconds(3f); //do some stuff on action
+            yield return StartCoroutine(
+                attack.Execute(CurrentUnit, targets, attackAction));
 
             EndCurrentTurn();
         }
@@ -197,7 +202,10 @@
 
             AttackAction attack = new AttackAction();
 
-            yield return StartCoroutine(attack.Execute(CurrentUnit, targets));
+            BattleActionSO attackAction = CurrentUnit.Data.Skills.FirstOrDefault(a => a.ActionType == BattleActionType.Attack);
+
+            yield return StartCoroutine(attack.Execute(CurrentUnit, targets, attackAction));
+            BattleEvents.OnBattleLog?.Invoke($"{CurrentUnit.Data.Name} dealt {CurrentUnit.Data.CurrentAtk} atk to {targets[0].Data.Name}");
             yield return new WaitForSeconds(3f); //do some stuff on action
 
             EndCurrentTurn();

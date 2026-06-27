@@ -1,9 +1,16 @@
 public enum BattleState
 {
     Setup,
-    TurnStart,
-    WaitingForInput,
-    ExecutingAction,
+
+    WaitingForCommand,
+
+    WaitingForTarget,
+
+    Executing,
+
+    Busy,
+
     Victory,
+
     Defeat
 }

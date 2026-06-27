@@ -9,6 +9,9 @@ public class BattleInitializer : MonoBehaviour
     [SerializeField]
     private BattleCameraFollow battleCamera;
 
+    [SerializeField]
+    private BattleUIManager battleUI;
+
     [Header("Spawn Anchors")]
     [SerializeField]
     private Transform playerSpawnAnchor;
@@ -26,6 +29,8 @@ public class BattleInitializer : MonoBehaviour
         SpawnCombatants();
 
         battleManager.InitializeBattle(spawnedPlayers, spawnedEnemies);
+
+        battleUI.Initialize(spawnedPlayers, spawnedEnemies);
     }
 
     private void ValidateSetup()

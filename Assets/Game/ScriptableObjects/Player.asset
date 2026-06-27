@@ -18,3 +18,5 @@ MonoBehaviour:
   CritChance: 1
   Defense: 0
   Speed: 2
+  Skills:
+  - {fileID: 11400000, guid: c017a651b8e0043489acbfa6be3ca0e7, type: 2}

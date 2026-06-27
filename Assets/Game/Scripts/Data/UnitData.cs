@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class UnitData
 {
     public UnitSO unitSO;
@@ -10,4 +12,6 @@ public class UnitData
     public float CurrentCritChance;
     public int CurrentDef;
     public int CurrentSpd;
+
+    public List<BattleActionSO> Skills;
 }

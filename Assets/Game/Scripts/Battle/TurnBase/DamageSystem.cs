@@ -2,9 +2,10 @@ using UnityEngine;
 
 public static class DamageSystem
 {
-    public static int CalculateDmg(
+    public static int CalculateDamage(
         BattleUnit attacker,
-        BattleUnit defender)
+        BattleUnit defender,
+        int multiplier)
     {
         int attack =
             attacker.Data.CurrentAtk;
@@ -13,7 +14,7 @@ public static class DamageSystem
             defender.Data.CurrentDef;
 
         int damage =
-            attack - defense;
+            (attack - defense) * multiplier;
 
         bool crit = Random.value < attacker.Data.CurrentCritChance;
 

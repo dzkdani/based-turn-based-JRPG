@@ -9,12 +9,6 @@ public class TurnManager
     {
         units.Sort((a,b) => b.Data.CurrentSpd.CompareTo(a.Data.CurrentSpd));
         turnQueue = new Queue<BattleUnit>(units);
-
-        // foreach(var unit in units)
-        // {
-        //     UnityEngine.Debug.Log(
-        //         $"{unit.name} SPD : {unit.Data.CurrentSpd}");
-        // }
     }
 
     public BattleUnit GetCurrentUnit()

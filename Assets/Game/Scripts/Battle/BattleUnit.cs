@@ -18,6 +18,8 @@ public class BattleUnit : MonoBehaviour
         Data.CurrentDef = UnitSO.Defense;
         Data.CurrentSpd = UnitSO.Speed;
         Data.CurrentCritChance = UnitSO.CritChance;
+
+        Data.Skills.AddRange(UnitSO.Skills);
     }
 
     public void TakeDamage(int dmg)

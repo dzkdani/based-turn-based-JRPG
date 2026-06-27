@@ -123,9 +123,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ForceDisableMovement() => DisableMovement();
-    public void ForceEnableMovement() => EnableMovement();
-
     private void DisableMovement()
     {
         Debug.Log("DisableMovement");

@@ -2,14 +2,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class UnitHUD : MonoBehaviour
 {
     [SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text hpText;
     [SerializeField] Slider hpBar;
+    [SerializeField] private Image selectionImage;
+    private Button button;
+    private TargetPanel targetPanel;
+    private BattleUnit unit;
 
-    BattleUnit unit;
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+        if (button == null)
+        {
+            button = gameObject.AddComponent<Button>();
+        }
+
+        targetPanel = GetComponentInParent<TargetPanel>(true);
+    }
 
     public void Setup(BattleUnit target)
     {
@@ -17,17 +31,25 @@ public class UnitHUD : MonoBehaviour
         nameText.text = unit.Data.Name;
         hpBar.maxValue = unit.Data.MaxHP;
 
+        if (button != null)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(SelectThisUnit);
+        }
+
         Refresh();
     }
 
     void OnEnable()
     {
         BattleEvents.OnUnitDamaged += OnDamaged;
+        BattleEvents.OnTargetSelected += OnTargetSelected;
     }
 
     void OnDisable()
     {
         BattleEvents.OnUnitDamaged -= OnDamaged;
+        BattleEvents.OnTargetSelected -= OnTargetSelected;
     }
 
     void OnDamaged(BattleUnit damaged)
@@ -38,25 +60,39 @@ public class UnitHUD : MonoBehaviour
         Refresh();
     }
 
-    public void Show()
-    {
-        
-    }
-
-    public void Hide()
-    {
-        
-    }
-
     public void SetSelected(bool selected)
     {
-        
+        if (selectionImage != null)
+        {
+            selectionImage.gameObject.SetActive(selected);
+        }
     }
-    
+
+    private void OnTargetSelected(BattleUnit selectedUnit)
+    {
+        SetSelected(selectedUnit == unit);
+    }
+
+    private void SelectThisUnit()
+    {
+        if (unit == null)
+            return;
+
+        if (targetPanel != null)
+        {
+            targetPanel.SelectTarget(unit);
+            return;
+        }
+
+        BattleEvents.OnTargetSelected?.Invoke(unit);
+    }
+
     void Refresh()
     {
         nameText.text = unit.Data.Name;
-        hpText.text = $"{unit.Data.CurrentHP}/{unit.Data.MaxHP}";
+        float currentHp = unit.Data.CurrentHP;
+        if (currentHp < 0) currentHp = 0;
+        hpText.text = $"{currentHp}/{unit.Data.MaxHP}";
         hpBar.DOValue(
             unit.Data.CurrentHP,
             0.3f

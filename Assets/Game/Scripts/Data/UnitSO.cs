@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class UnitSO : ScriptableObject
 {
     public string Name;
+    public Team team;
 
     public int MaxHP;
     public int Attack;
@@ -12,5 +13,6 @@ public class UnitSO : ScriptableObject
     public int Defense;
     public int Speed;
 
+    public AIBehaviorSO AIBehavior;
     public List<BattleActionSO> Skills;
 }

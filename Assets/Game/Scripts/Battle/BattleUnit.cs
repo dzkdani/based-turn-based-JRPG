@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BattleUnit : MonoBehaviour
 {
@@ -19,8 +20,13 @@ public class BattleUnit : MonoBehaviour
         Data.CurrentSpd = UnitSO.Speed;
         Data.CurrentCritChance = UnitSO.CritChance;
 
+        Data.Skills = new List<BattleActionSO>();
         Data.Skills.AddRange(UnitSO.Skills);
+
+        Team = UnitSO.team;
     }
+
+    public AIBehaviorSO AIBehavior => UnitSO != null ? UnitSO.AIBehavior : null;
 
     public void TakeDamage(int dmg)
     {

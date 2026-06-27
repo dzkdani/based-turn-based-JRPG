@@ -2,8 +2,6 @@ using System.Collections.Generic;
 
 public class UnitData
 {
-    public UnitSO unitSO;
-
     public string Name;
     public int MaxHP;
     public int CurrentHP;

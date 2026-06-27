@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: Assembly-CSharp::UnitSO
   Name: Enemy
+  team: 1
   MaxHP: 10
   Attack: 1
   CritChance: 0
   Defense: 0
   Speed: 1
+  AIBehavior: {fileID: 11400000, guid: 2f4fa886de5d8b4419a329e3990dd9ff, type: 2}
   Skills:
   - {fileID: 11400000, guid: c017a651b8e0043489acbfa6be3ca0e7, type: 2}

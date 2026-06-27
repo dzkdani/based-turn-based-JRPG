@@ -1,42 +1,99 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TurnManager
 {
-    Queue<BattleUnit> turnQueue;
+    private readonly List<BattleUnit> turnOrder = new();
+    private int currentIndex;
+
+    public IReadOnlyList<BattleUnit> Units => turnOrder;
 
     public void Initialize(List<BattleUnit> units)
     {
-        units.Sort((a,b) => b.Data.CurrentSpd.CompareTo(a.Data.CurrentSpd));
-        turnQueue = new Queue<BattleUnit>(units);
+        turnOrder.Clear();
+
+        if (units != null)
+        {
+            turnOrder.AddRange(units.Where(unit => unit != null));
+            SortBySpeed();
+        }
+
+        currentIndex = 0;
     }
 
     public BattleUnit GetCurrentUnit()
     {
-        return turnQueue.Peek();
+        if (turnOrder.Count == 0)
+            return null;
+
+        return turnOrder[currentIndex];
     }
 
     public void AdvanceTurn()
     {
-        if(turnQueue == null || turnQueue.Count == 0)
+        if (turnOrder.Count == 0)
         {
-            Debug.LogError("Turn Queue Empty!");
+            Debug.LogError("Turn order is empty.");
             return;
         }
 
         int safetyCounter = 0;
         do
         {
-            BattleUnit unit = turnQueue.Dequeue();
-            turnQueue.Enqueue(unit);
+            currentIndex = (currentIndex + 1) % turnOrder.Count;
             safetyCounter++;
+        }
+        while (GetCurrentUnit().IsDead && safetyCounter < turnOrder.Count);
 
-        } while(GetCurrentUnit().IsDead && safetyCounter < turnQueue.Count);
-
-        if(GetCurrentUnit().IsDead)
+        if (GetCurrentUnit().IsDead)
         {
             Debug.LogWarning("All remaining units are dead.");
-            return;
         }
+    }
+
+    public void AddUnit(BattleUnit unit)
+    {
+        if (unit == null || turnOrder.Contains(unit))
+            return;
+
+        turnOrder.Add(unit);
+        SortBySpeed();
+    }
+
+    public void RemoveUnit(BattleUnit unit)
+    {
+        if (unit == null)
+            return;
+
+        int index = turnOrder.IndexOf(unit);
+        if (index < 0)
+            return;
+
+        turnOrder.RemoveAt(index);
+
+        if (currentIndex >= turnOrder.Count)
+            currentIndex = 0;
+    }
+
+    public void RefreshOrder()
+    {
+        if (turnOrder.Count == 0)
+            return;
+
+        BattleUnit current = GetCurrentUnit();
+        SortBySpeed();
+
+        if (current != null)
+        {
+            currentIndex = turnOrder.IndexOf(current);
+            if (currentIndex < 0)
+                currentIndex = 0;
+        }
+    }
+
+    private void SortBySpeed()
+    {
+        turnOrder.Sort((a, b) => b.Data.CurrentSpd.CompareTo(a.Data.CurrentSpd));
     }
 }

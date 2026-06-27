@@ -74,8 +74,6 @@ public class BattleInitializer : MonoBehaviour
 
         spawnedPlayers.Add(playerUnit);
 
-        GameManager.Instance.CurrentBattlePlayer = playerUnit;
-
         SetupBattleCamera(playerInstance.transform);
     }
 

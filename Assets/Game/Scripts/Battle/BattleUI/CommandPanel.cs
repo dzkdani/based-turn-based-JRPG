@@ -8,8 +8,8 @@ public class CommandPanel : MonoBehaviour
     private void OnEnable()
     {
         BattleEvents.OnPlayerTurn += Show;
-        // BattleEvents.OnEnemyTurn += Hide;
-        BattleEvents.OnExecuteAction += Hide;
+        BattleEvents.OnEnemyTurn += Hide;
+        BattleEvents.OnAttackPressed += Hide;
         BattleEvents.OnVictory += Hide;
         BattleEvents.OnDefeat += Hide;
     }
@@ -17,8 +17,8 @@ public class CommandPanel : MonoBehaviour
     private void OnDisable()
     {
         BattleEvents.OnPlayerTurn -= Show;
-        // BattleEvents.OnEnemyTurn -= Hide;
-        BattleEvents.OnExecuteAction -= Hide;
+        BattleEvents.OnEnemyTurn -= Hide;
+        BattleEvents.OnAttackPressed -= Hide;
         BattleEvents.OnVictory -= Hide;
         BattleEvents.OnDefeat -= Hide;
     }
@@ -33,14 +33,13 @@ public class CommandPanel : MonoBehaviour
         animator.Hide();
     }
 
-    public void Attack(BattleActionSO attackActionSO)
+    public void Attack()
     {
-        BattleEvents.OnActionSelected?.Invoke(attackActionSO);
+        BattleEvents.OnAttackPressed?.Invoke();
     }
 
     public void Run()
     {
         BattleEvents.OnRunPressed?.Invoke();
-        BattleEvents.OnExecuteAction?.Invoke();
     }
 }

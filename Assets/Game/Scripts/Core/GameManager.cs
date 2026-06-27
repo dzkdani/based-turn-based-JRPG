@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Battle Setup")]
     public GameObject PlayerBattlePrefab;
-    public BattleUnit CurrentBattlePlayer { get; set; }
 
 
     private void Awake()

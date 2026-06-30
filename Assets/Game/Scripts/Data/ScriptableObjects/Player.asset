@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::UnitSO
   Name: MC
+  team: 0
   MaxHP: 10
   Attack: 2
   CritChance: 1
   Defense: 0
   Speed: 2
+  AIBehavior: {fileID: 0}
   Skills:
   - {fileID: 11400000, guid: c017a651b8e0043489acbfa6be3ca0e7, type: 2}
+  - {fileID: 11400000, guid: ca016536a5ed3a240a3efc25772c755a, type: 2}

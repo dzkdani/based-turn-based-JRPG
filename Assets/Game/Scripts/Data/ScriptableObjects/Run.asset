@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3dd8951c8c422e47979da4e724c094a, type: 3}
-  m_Name: BasicAtk
-  m_EditorClassIdentifier: Assembly-CSharp::BattleActionData
-  ActionName: Basic Attack
-  ActionType: 0
-  TargetType: 0
-  Multiplier: 1
+  m_Name: Run
+  m_EditorClassIdentifier: Assembly-CSharp::BattleActionSO
+  ActionName: 
+  ActionType: 2
+  TargetType: 4
+  Multiplier: 0
   SFX: {fileID: 0}

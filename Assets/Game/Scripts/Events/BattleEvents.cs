@@ -7,6 +7,7 @@ public static class BattleEvents
     public static Action<string> OnBattleLog;
 
     public static Action<BattleActionSO> OnActionSelected;
+    public static Action<BattleActionSO> OnImmediateActionSelected;
 
     public static Action<BattleUnit> OnTargetSelected;
  

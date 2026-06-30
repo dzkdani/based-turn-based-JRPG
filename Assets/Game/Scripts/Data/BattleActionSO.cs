@@ -9,6 +9,8 @@ public class BattleActionSO : ScriptableObject
 
     public TargetType TargetType;
 
+    public TargetRequirement TargetRequirement;
+
     public int Multiplier;
 
     public AudioClip SFX;
@@ -19,4 +21,10 @@ public enum BattleActionType
     Attack,
     Heal,
     Run
+}
+
+public enum TargetRequirement
+{
+    None,
+    Required
 }

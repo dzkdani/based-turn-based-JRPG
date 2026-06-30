@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour
         BattleEvents.OnRunPressed += OnRunPressed;
         BattleEvents.OnTargetSelected += OnTargetSelected;
         BattleEvents.OnActionSelected += OnActionSelected;
+        BattleEvents.OnImmediateActionSelected += OnImmediateActionSelected;
     }
 
     private void OnDisable()
@@ -31,6 +32,7 @@ public class BattleManager : MonoBehaviour
         BattleEvents.OnRunPressed -= OnRunPressed;
         BattleEvents.OnTargetSelected -= OnTargetSelected;
         BattleEvents.OnActionSelected -= OnActionSelected;
+        BattleEvents.OnImmediateActionSelected -= OnImmediateActionSelected;
         
         if (battleFlow != null)
             battleFlow.EnemyTurnStarted -= OnEnemyTurnStarted;
@@ -90,7 +92,8 @@ public class BattleManager : MonoBehaviour
         if(CurrentState != BattleState.WaitingForCommand)
             return;
 
-        BattleEvents.OnBattleLog?.Invoke($"Not Implemented yet ehe..");
+        BattleActionSO runAction = CurrentUnit.Data.Skills.FirstOrDefault(a => a.ActionType == BattleActionType.Run);
+        BattleEvents.OnActionSelected?.Invoke(runAction);
     }
 
     private void OnActionSelected(BattleActionSO action)
@@ -106,5 +109,29 @@ public class BattleManager : MonoBehaviour
     private void OnEnemyTurnStarted()
     {
         StartCoroutine(battleFlow.PerformEnemyTurn(PlayerUnits, EnemyUnits));
+    }
+
+    private void OnImmediateActionSelected(BattleActionSO action)
+    {
+        StartCoroutine(ExecuteImmediateAction(action));
+    }
+
+    private IEnumerator ExecuteImmediateAction(BattleActionSO action)
+    {
+        List<BattleUnit> targets =
+            actionSystem.ResolveTargets(
+                battleFlow.CurrentUnit,
+                action,
+                PlayerUnits,
+                EnemyUnits,
+                null,
+                targetSystem);
+
+        yield return actionSystem.ExecuteAction(
+            battleFlow.CurrentUnit,
+            targets,
+            action);
+
+        battleFlow.EndCurrentTurn(PlayerUnits, EnemyUnits);
     }
 }

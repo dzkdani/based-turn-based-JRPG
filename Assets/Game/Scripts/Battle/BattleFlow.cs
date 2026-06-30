@@ -107,16 +107,17 @@ public class BattleFlow
         if (CurrentState != BattleState.WaitingForCommand)
             return;
 
-        if (CurrentUnit == null || CurrentUnit.Team != Team.Player)
-            return;
+        currentAction = action;
 
-        if (action == null)
+        if (action.TargetRequirement == TargetRequirement.None)
         {
-            BattleEvents.OnBattleLog?.Invoke("No action selected.");
+            CurrentState = BattleState.Executing;
+
+            // Execute immediately
+            BattleEvents.OnImmediateActionSelected?.Invoke(action);
             return;
         }
 
-        currentAction = action;
         CurrentState = BattleState.WaitingForTarget;
         BattleEvents.OnBattleLog?.Invoke($"Select target for {action.ActionName}");
     }

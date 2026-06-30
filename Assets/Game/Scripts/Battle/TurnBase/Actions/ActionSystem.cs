@@ -20,22 +20,33 @@ public class ActionSystem
     }
 
     public IEnumerator ExecuteAction(
-        BattleUnit attacker,
-        List<BattleUnit> targets,
-        BattleActionSO actionData)
+    BattleUnit attacker,
+    List<BattleUnit> targets,
+    BattleActionSO actionData)
     {
-        if (actionData == null || targets == null || targets.Count == 0)
-        {
+        if (actionData == null)
             yield break;
-        }
 
-        if (actionData.ActionType != BattleActionType.Attack)
-        {
-            BattleEvents.OnBattleLog?.Invoke($"{actionData.ActionName} is not implemented yet.");
+        BattleAction action = CreateAction(actionData.ActionType);
+
+        if (action == null)
             yield break;
-        }
 
-        AttackAction attack = new AttackAction();
-        yield return attack.Execute(attacker, targets, actionData);
+        yield return action.Execute(attacker, targets, actionData);
+    }
+
+    private BattleAction CreateAction(BattleActionType type)
+    {
+        switch (type)
+        {
+            case BattleActionType.Attack:
+                return new AttackAction();
+
+            case BattleActionType.Run:
+                return new RunAction();
+
+            default:
+                return null;
+        }
     }
 }

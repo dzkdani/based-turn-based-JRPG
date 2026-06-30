@@ -1,21 +1,27 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInteractionHandler))]
+public class PlayerController : MonoBehaviour, ICutsceneLockable
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
+
     public bool CanMove { get; private set; } = true;
 
-    private Matrix4x4 _isoMatrix;
-    private Vector3 _inputDirection;
-    private Vector3 _isoDirection;
-    private Rigidbody _rigidbody;
+    private PlayerInput _inputReader;
+    private PlayerMovement _movement;
+    private PlayerInteractionHandler _interactionHandler;
 
-    private Interaction _currentInteraction;
+    private void Awake()
+    {
+        _inputReader = GetOrAddComponent<PlayerInput>();
+        _movement = GetOrAddComponent<PlayerMovement>();
+        _interactionHandler = GetOrAddComponent<PlayerInteractionHandler>();
 
-    private Vector3? _cutsceneTarget = null;
-    private float _cutsceneSpeed;
-
+        _movement.SetMoveSpeed(moveSpeed);
+    }
 
     private void OnEnable()
     {
@@ -35,105 +41,49 @@ public class PlayerController : MonoBehaviour
         WorldEvents.OnWorldUnfreeze -= EnableMovement;
     }
 
-    private void Start()
-    {
-        _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-
     private void Update()
     {
-        Input();
-        Interact();
+        _inputReader.Poll();
+
+        if (CanMove && _inputReader.InteractPressed)
+            _interactionHandler.Interact();
     }
 
     private void FixedUpdate()
     {
         if (CanMove)
-            Move();
-        else if (_cutsceneTarget.HasValue)
-        {
-            // DoCutscene
-        }
-    }
-
-    private void Input()
-    {
-        if (!CanMove)
-        {
-            _inputDirection = Vector3.zero;
-            _isoDirection = Vector3.zero;
-            return;
-        }
-
-        float horizontal = UnityEngine.Input.GetAxisRaw("Horizontal"); 
-        float vertical = UnityEngine.Input.GetAxisRaw("Vertical");     
-
-        _inputDirection = new Vector3(horizontal, 0, vertical).normalized;
-        _isoDirection = _isoMatrix.MultiplyPoint3x4(_inputDirection);
-    }
-
-    private void Interact()
-    {
-        if (CanMove && _currentInteraction != null && UnityEngine.Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 lookDirection = _currentInteraction.transform.position - transform.position;
-            lookDirection.y = 0; 
-
-            if (lookDirection != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(lookDirection);
-            }
-
-            _currentInteraction.StartInteraction(); 
-        }
-    }
-
-    private void Move()
-    {
-        if (_inputDirection.magnitude > 0.1f)
-        {
-            Vector3 targetPosition = transform.position + (_isoDirection * moveSpeed * Time.fixedDeltaTime);
-            
-            _rigidbody.MovePosition(targetPosition);
-
-            Quaternion targetRotation = Quaternion.LookRotation(_isoDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.15f);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Interaction>(out Interaction interaction))
-        {
-            _currentInteraction = interaction;
-            WorldUIManager.Instance.ShowInteraction(interaction);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<Interaction>(out Interaction interaction))
-        {
-            if (_currentInteraction == interaction)
-            {
-                _currentInteraction = null;
-                WorldUIManager.Instance.HideInteraction();
-            }
-        }
+            _movement.Move(_inputReader.MoveInput);
     }
 
     private void DisableMovement()
     {
-        Debug.Log("DisableMovement");
         CanMove = false;
-        WorldUIManager.Instance.HideInteraction();
+        _inputReader.SetInputEnabled(false);
+        _interactionHandler.HidePrompt();
     }
+
     private void EnableMovement()
     {
-        Debug.Log("EnableMovement");
         CanMove = true;
-        if (_currentInteraction != null)
-            WorldUIManager.Instance.ShowInteraction(_currentInteraction);
+        _inputReader.SetInputEnabled(true);
+        _interactionHandler.ShowPrompt();
+    }
+
+    public void LockForCutscene()
+    {
+        DisableMovement();
+    }
+
+    public void UnlockFromCutscene()
+    {
+        EnableMovement();
+    }
+
+    private T GetOrAddComponent<T>() where T : Component
+    {
+        if (TryGetComponent(out T component))
+            return component;
+
+        return gameObject.AddComponent<T>();
     }
 }

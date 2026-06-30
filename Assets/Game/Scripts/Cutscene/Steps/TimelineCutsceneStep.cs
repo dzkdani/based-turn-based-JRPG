@@ -2,12 +2,22 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
+[CreateAssetMenu(menuName = "Cutscene/Timeline Step")]
 public class TimelineCutsceneStep : CutsceneStep
 {
-    [SerializeField] private PlayableDirector director;
+    [SerializeField] private string timelineID;
+
+    private PlayableDirector director;
+
+    public void SetDirector(PlayableDirector newDirector)
+    {
+        director = newDirector;
+    }
 
     public override void Execute(CutsceneSequenceContext context, Action onComplete)
     {
+        director = context.Registry.GetTimeline(timelineID);
+
         if (director == null)
         {
             Debug.LogError("TimelineCutsceneStep is missing a PlayableDirector.");
@@ -15,11 +25,6 @@ public class TimelineCutsceneStep : CutsceneStep
             return;
         }
 
-        context.Director = director;
-        context.Manager.PlayDirector(director, () =>
-        {
-            context.Finish();
-            onComplete?.Invoke();
-        });
+        context.Manager.PlayTimelineStep(director, onComplete);
     }
 }

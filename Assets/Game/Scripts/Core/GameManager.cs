@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Battle Setup")]
     public GameObject PlayerBattlePrefab;
+    // public List<GameObject> PlayerPrefabs; //for party settings later
 
 
     private void Awake()

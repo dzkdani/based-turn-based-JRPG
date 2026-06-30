@@ -10,6 +10,12 @@ public class BattleUnit : MonoBehaviour
 
     private void Awake()
     {
+        if (UnitSO == null)
+        {
+            Debug.LogError("Unit had no SO");
+            return;
+        }
+        
         Data = new UnitData();
 
         Data.Name = UnitSO.Name;

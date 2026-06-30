@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Cutscene/Wait Step")]
 public class WaitCutsceneStep : CutsceneStep
 {
     [SerializeField] private float duration = 0.5f;

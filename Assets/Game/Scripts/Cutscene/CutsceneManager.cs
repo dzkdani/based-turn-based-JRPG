@@ -10,18 +10,17 @@ public class CutsceneManager : MonoBehaviour
     [Header("Gameplay lock")]
     [SerializeField] private List<MonoBehaviour> lockables = new List<MonoBehaviour>();
 
-    [Header("Runtime state")]
     public bool IsPlaying { get; private set; }
     public PlayableDirector CurrentDirector { get; private set; }
-    public CutsceneSequenceContext CurrentContext { get; private set; }
 
     public event Action OnCutsceneStarted;
     public event Action OnCutsceneFinished;
 
     private readonly Queue<CutsceneStep> _stepQueue = new Queue<CutsceneStep>();
-    private Action _sequenceComplete;
+    private Action _cutsceneComplete;
+    private Action _directorComplete;
     private bool _isSequenceRunning;
-    private bool _isDirectorOwnedBySequence;
+    private CutsceneStep _currentStep; // Track the active step for skipping
 
     private void Awake()
     {
@@ -30,35 +29,7 @@ public class CutsceneManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-    }
-
-    public void PlayDirector(PlayableDirector director, Action onComplete = null)
-    {
-        if (IsPlaying)
-        {
-            Debug.LogWarning("A cutscene is already playing.");
-            return;
-        }
-
-        if (director == null)
-        {
-            Debug.LogError("PlayableDirector is NULL.");
-            return;
-        }
-
-        CurrentDirector = director;
-        _sequenceComplete = onComplete;
-        _isDirectorOwnedBySequence = true;
-
-        LockGameplay();
-        IsPlaying = true;
-
-        CurrentDirector.stopped += HandleTimelineFinished;
-        CurrentDirector.Play();
-
-        OnCutsceneStarted?.Invoke();
     }
 
     public void RunSequence(IEnumerable<CutsceneStep> steps, Action onComplete = null)
@@ -69,152 +40,108 @@ public class CutsceneManager : MonoBehaviour
             return;
         }
 
-        if (steps == null)
+        _stepQueue.Clear();
+        foreach (var step in steps)
         {
-            Debug.LogError("Cutscene sequence steps are NULL.");
+            if (step != null) _stepQueue.Enqueue(step);
+        }
+
+        if (_stepQueue.Count == 0)
+        {
             onComplete?.Invoke();
             return;
         }
 
-        _stepQueue.Clear();
-        foreach (var step in steps)
-        {
-            if (step != null)
-                _stepQueue.Enqueue(step);
-        }
-
-        _sequenceComplete = onComplete;
         _isSequenceRunning = true;
-        LockGameplay();
-        IsPlaying = true;
-
-        OnCutsceneStarted?.Invoke();
+        BeginCutscene(onComplete);
         AdvanceSequence();
-    }
-
-    public void Pause()
-    {
-        if (!IsPlaying)
-            return;
-
-        CurrentDirector?.Pause();
-    }
-
-    public void Resume()
-    {
-        if (!IsPlaying)
-            return;
-
-        CurrentDirector?.Resume();
-    }
-
-    public void Stop()
-    {
-        if (!IsPlaying)
-            return;
-
-        if (_isDirectorOwnedBySequence && CurrentDirector != null)
-        {
-            CurrentDirector.Stop();
-        }
-        else
-        {
-            CompleteSequence();
-        }
-    }
-
-    public void Skip()
-    {
-        if (!IsPlaying)
-            return;
-
-        if (CurrentDirector != null)
-        {
-            CurrentDirector.time = CurrentDirector.duration;
-            CurrentDirector.Evaluate();
-            CurrentDirector.Stop();
-        }
-        else
-        {
-            CompleteSequence();
-        }
     }
 
     private void AdvanceSequence()
     {
-        if (!_isSequenceRunning || _stepQueue.Count == 0)
+        if (!_isSequenceRunning) return;
+
+        if (_stepQueue.Count == 0)
         {
-            CompleteSequence();
+            CompleteCutscene();
             return;
         }
 
-        var step = _stepQueue.Dequeue();
-        var context = new CutsceneSequenceContext
-        {
-            Manager = this,
-            OnFinished = () => AdvanceSequence()
-        };
+        var context = new CutsceneSequenceContext { Manager = this , Registry = CutsceneRegistry.Instance};
 
-        CurrentContext = context;
-        step.Execute(context, () =>
-        {
-            if (context.OnFinished != null)
-            {
-                context.OnFinished();
-            }
-        });
+        _currentStep = _stepQueue.Dequeue();
+        _currentStep.Execute(context, AdvanceSequence);
+    }
+
+    public void PlayTimelineStep(PlayableDirector director, Action onComplete)
+    {
+        CurrentDirector = director;
+        _directorComplete = onComplete;
+
+        CurrentDirector.stopped -= HandleTimelineFinished;
+        CurrentDirector.stopped += HandleTimelineFinished;
+
+        CurrentDirector.time = 0;
+        CurrentDirector.Play();
     }
 
     private void HandleTimelineFinished(PlayableDirector director)
     {
-        if (director != CurrentDirector)
-            return;
-
+        if (director != CurrentDirector) return;
         director.stopped -= HandleTimelineFinished;
-        FinishCurrentCutscene();
-    }
-
-    private void FinishCurrentCutscene()
-    {
-        UnlockGameplay();
-
-        IsPlaying = false;
         CurrentDirector = null;
-        CurrentContext = null;
-        _isDirectorOwnedBySequence = false;
 
-        OnCutsceneFinished?.Invoke();
-        _sequenceComplete?.Invoke();
-        _sequenceComplete = null;
+        var onComplete = _directorComplete;
+        _directorComplete = null;
+        onComplete?.Invoke();
     }
 
-    private void CompleteSequence()
+    public void Skip()
+    {
+        if (!IsPlaying) return;
+
+        // 1. If the specific step has custom skip logic (like Fungus), use it
+        if (_currentStep != null)
+        {
+            _currentStep.Skip();
+        }
+
+        // 2. If a timeline is running, fast-forward it
+        if (CurrentDirector != null)
+        {
+            CurrentDirector.time = CurrentDirector.duration;
+            CurrentDirector.Evaluate();
+            CurrentDirector.Stop(); // This naturally triggers HandleTimelineFinished -> AdvanceSequence
+        }
+    }
+
+    private void BeginCutscene(Action onComplete)
+    {
+        _cutsceneComplete = onComplete;
+        IsPlaying = true;
+        LockGameplay();
+        OnCutsceneStarted?.Invoke();
+    }
+
+    private void CompleteCutscene()
     {
         _isSequenceRunning = false;
         _stepQueue.Clear();
+        _currentStep = null;
         UnlockGameplay();
 
         IsPlaying = false;
-        CurrentDirector = null;
-        CurrentContext = null;
-        _isDirectorOwnedBySequence = false;
-
         OnCutsceneFinished?.Invoke();
-        _sequenceComplete?.Invoke();
-        _sequenceComplete = null;
+        
+        _cutsceneComplete?.Invoke();
+        _cutsceneComplete = null;
     }
 
     private void LockGameplay()
     {
         foreach (var behaviour in lockables)
         {
-            if (behaviour == null)
-                continue;
-
-            if (behaviour is ICutsceneLockable lockable)
-            {
-                lockable.LockForCutscene();
-            }
+            if (behaviour is ICutsceneLockable lockable) lockable.LockForCutscene();
         }
     }
 
@@ -222,13 +149,7 @@ public class CutsceneManager : MonoBehaviour
     {
         foreach (var behaviour in lockables)
         {
-            if (behaviour == null)
-                continue;
-
-            if (behaviour is ICutsceneLockable lockable)
-            {
-                lockable.UnlockFromCutscene();
-            }
+            if (behaviour is ICutsceneLockable lockable) lockable.UnlockFromCutscene();
         }
     }
 }

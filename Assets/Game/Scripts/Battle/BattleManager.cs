@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
     private void OnEnable()
     {
         BattleEvents.OnAttackPressed += OnAttackPressed;
+        BattleEvents.OnRunPressed += OnRunPressed;
         BattleEvents.OnTargetSelected += OnTargetSelected;
         BattleEvents.OnActionSelected += OnActionSelected;
     }
@@ -27,8 +28,10 @@ public class BattleManager : MonoBehaviour
     private void OnDisable()
     {
         BattleEvents.OnAttackPressed -= OnAttackPressed;
+        BattleEvents.OnRunPressed -= OnRunPressed;
         BattleEvents.OnTargetSelected -= OnTargetSelected;
         BattleEvents.OnActionSelected -= OnActionSelected;
+        
         if (battleFlow != null)
             battleFlow.EnemyTurnStarted -= OnEnemyTurnStarted;
     }
@@ -80,6 +83,14 @@ public class BattleManager : MonoBehaviour
 
         BattleActionSO attackAction = CurrentUnit?.Data.Skills.FirstOrDefault(a => a.ActionType == BattleActionType.Attack);
         BattleEvents.OnActionSelected?.Invoke(attackAction);
+    }
+
+    private void OnRunPressed()
+    {
+        if(CurrentState != BattleState.WaitingForCommand)
+            return;
+
+        BattleEvents.OnBattleLog?.Invoke($"Not Implemented yet ehe..");
     }
 
     private void OnActionSelected(BattleActionSO action)

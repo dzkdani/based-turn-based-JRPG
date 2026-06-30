@@ -1001,7 +1001,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1000926211}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1809388506}
+        m_TargetAssemblyTypeName: CommandPanel, Assembly-CSharp
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1000926211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1395,10 +1407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef46c3d4f0485249b0c5fb75ef355b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
-  CurrentState: 0
   PlayerUnits: []
   EnemyUnits: []
-  CurrentUnit: {fileID: 0}
 --- !u!4 &1454535620
 Transform:
   m_ObjectHideFlags: 0
